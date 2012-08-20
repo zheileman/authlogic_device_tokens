@@ -10,8 +10,9 @@ module AuthlogicDeviceTokens
           validate :validate_by_device, :if => :authenticating_with_device?
           
           def self.destroy_if_any type = nil
+            cookie_name = (type == :device ? device_cookie_key : cookie_key)
             find.try(:destroy)
-            controller.cookies.delete (type == :device ? device_cookie_key : cookie_key)
+            controller.cookies.delete cookie_name, :domain => controller.cookie_domain if controller.cookies[cookie_name]
           end
         end
       end
@@ -109,7 +110,7 @@ module AuthlogicDeviceTokens
         self.class.device_cookie_key
       end
       def device_session_key
-        self.class.device_cookie_key
+        self.class.device_session_key
       end
 
       def device_auth_token_field
