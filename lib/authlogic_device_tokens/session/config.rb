@@ -23,7 +23,7 @@ module AuthlogicDeviceTokens
       # * <tt>Default:</tt> :device
       # * <tt>Accepts:</tt> Symbol
       def device_session_key(value=nil)
-        rw_config(:device_session_key, value, :device_session)
+        rw_config(:device_session_key, value, device_cookie_key)
       end
       alias_method :device_session_key=, :device_session_key
 

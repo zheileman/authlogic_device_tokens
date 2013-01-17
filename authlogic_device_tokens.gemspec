@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version = AuthlogicDeviceTokens::VERSION
 
   s.authors          = ["Jesus Laiz (aka zheileman)"]
-  s.date             = %q{2012-08-16}
+  s.date             = %q{2013-01-17}
   s.description      = %q{Authlogic extension to support multiple per-device and per-user tokens.}
   s.email            = %q{jesus.laiz@gmail.com}
   s.extra_rdoc_files = [

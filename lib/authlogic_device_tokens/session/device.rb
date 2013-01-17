@@ -8,6 +8,7 @@ module AuthlogicDeviceTokens
           attr_accessor :skip_device_authentication
           attr_reader :auth_token
           validate :validate_by_device, :if => :authenticating_with_device?
+          before_destroy :invalidate_token
           
           def self.destroy_if_any type = nil
             cookie_name = (type == :device ? device_cookie_key : cookie_key)
@@ -54,6 +55,10 @@ module AuthlogicDeviceTokens
 
       private
 
+      def invalidate_token
+        @auth_token = nil
+      end
+
       def validate_by_device
         device_token = device_user.auth_token
         self.attempted_record = klass.send(user_device_finder, device_token)
@@ -74,8 +79,8 @@ module AuthlogicDeviceTokens
       end
       
       def update_session
-        if device_session
-          controller.session[device_session_key] = device_user.auth_token
+        if logged_in_with_device?
+          controller.session[device_session_key] = self.auth_token
         else
           super
         end

@@ -59,11 +59,11 @@ In the User model you will need the following (modify according to your setup):
     has_many :devices, :dependent => :destroy
     
     def self.find_by_device_auth_token token
-      Device.find_by_auth_token(token, :joins => [:user => :account]).try(:user)
+      Device.where(:auth_token => token).first.try(:user)
     end
 
 
 Copyright
 ---------
 
-Copyright (c) 2012 Jesus Laiz (aka zheileman). See LICENSE for details.
+Copyright (c) 2012-2013 Jesus Laiz (aka zheileman). See LICENSE for details.
